@@ -1,0 +1,17 @@
+body {
+    background-color: darkgrey;
+}
+
+.game {
+    width : 80%;
+    margin: 0 auto;
+}
+
+canvas {
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #5D94FB;
+    margin-left: 10%;
+    /*HINT: Hide the cursor here */
+}
