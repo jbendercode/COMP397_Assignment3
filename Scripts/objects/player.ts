@@ -2,7 +2,7 @@ module objects {
     export class Player extends objects.GameObject {
         private _gravity : number = 9.81;
 
-        private _maxSpeedX : number = 1;
+        private _maxSpeedX : number = 10;
         private _velocity : objects.Vector2;
         private _accelerationX : number;
         private _jumpSpeed : number = 10;
@@ -23,6 +23,7 @@ module objects {
             this.position = new objects.Vector2(30, 0);
             this.regX = this.getBounds().width * 0.5;
             this.regY = this.getBounds().height;
+            this._accelerationX = 0;
         }
 
         public update() : void {
@@ -36,21 +37,16 @@ module objects {
             // Gravity affects Velocity.y
             // MaxSpeed caps Velocity.x
             if(Math.abs(this._velocity.x) < this._maxSpeedX) {
-                
+                this._velocity.x += this._accelerationX;
             }
 
-            this._velocity.x += this._accelerationX;
-            this.position.x += this._velocity.x;
-
-            this.position.y += this._velocity.y + this._gravity;
-            /*
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
 
             if(!this._isGrounded)
                 this.position.y += this._velocity.y + this._gravity;
-            */
 
+            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             super.update();
         }
 
@@ -74,7 +70,10 @@ module objects {
             this._accelerationX += 0.05;
         }
         public moveLeft() : void {
-            this._accelerationX -= 0.05;
+            this._accelerationX += -0.05;
+        }
+        public resetAcceleration() : void {
+            this._accelerationX = 0;
         }
     }
 }

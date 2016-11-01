@@ -56,12 +56,17 @@ module scenes {
             if(!this._player.getIsGrounded())
                 this._checkPlayerWithFloor();
 
+
             if(controls.LEFT) {
                 this._player.moveLeft();
             }
-
             if(controls.RIGHT) { 
                 this._player.moveRight();
+            } 
+
+            if(!controls.RIGHT && !controls.LEFT)
+            {
+                this._player.resetAcceleration();
             }
         }
 

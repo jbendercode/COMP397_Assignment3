@@ -10,7 +10,7 @@ var objects;
         function Player(imgString) {
             _super.call(this, atlas, imgString);
             this._gravity = 9.81;
-            this._maxSpeedX = 1;
+            this._maxSpeedX = 10;
             this._jumpSpeed = 10;
             this._friction = -1;
             this._marioState = config.MarioState.SMALL;
@@ -24,6 +24,7 @@ var objects;
             this.position = new objects.Vector2(30, 0);
             this.regX = this.getBounds().width * 0.5;
             this.regY = this.getBounds().height;
+            this._accelerationX = 0;
         };
         Player.prototype.update = function () {
             if (this._isGrounded)
@@ -35,17 +36,13 @@ var objects;
             // Gravity affects Velocity.y
             // MaxSpeed caps Velocity.x
             if (Math.abs(this._velocity.x) < this._maxSpeedX) {
+                this._velocity.x += this._accelerationX;
             }
-            this._velocity.x += this._accelerationX;
-            this.position.x += this._velocity.x;
-            this.position.y += this._velocity.y + this._gravity;
-            /*
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
-
-            if(!this._isGrounded)
+            if (!this._isGrounded)
                 this.position.y += this._velocity.y + this._gravity;
-            */
+            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             _super.prototype.update.call(this);
         };
         Player.prototype.getVelocity = function () {
@@ -64,7 +61,10 @@ var objects;
             this._accelerationX += 0.05;
         };
         Player.prototype.moveLeft = function () {
-            this._accelerationX -= 0.05;
+            this._accelerationX += -0.05;
+        };
+        Player.prototype.resetAcceleration = function () {
+            this._accelerationX = 0;
         };
         return Player;
     }(objects.GameObject));

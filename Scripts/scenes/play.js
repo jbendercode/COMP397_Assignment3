@@ -47,6 +47,9 @@ var scenes;
             if (controls.RIGHT) {
                 this._player.moveRight();
             }
+            if (!controls.RIGHT && !controls.LEFT) {
+                this._player.resetAcceleration();
+            }
         };
         Play.prototype._onKeyDown = function (event) {
             switch (event.keyCode) {
