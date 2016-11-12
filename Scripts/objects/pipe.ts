@@ -6,8 +6,8 @@ module objects {
 
         constructor(pipeSize : string, defaultPosition : objects.Vector2) {
             super(atlas, pipeSize);
-            this.position.x = defaultPosition.x;
-            this.position.y = defaultPosition.y;
+            this.x = defaultPosition.x;
+            this.y = defaultPosition.y;
         }
     }
 }

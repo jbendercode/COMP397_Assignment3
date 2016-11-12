@@ -12,6 +12,9 @@ module objects {
         private _isStar : boolean = false;
         private _isDead : boolean = false;
         private _isGrounded : boolean = false;
+        private _isJumping : boolean = false;
+        
+        public isColliding : boolean = false;
 
         constructor(imgString : string) {
             super(atlas, imgString);
@@ -21,14 +24,14 @@ module objects {
         public start() : void {
             this._velocity = new objects.Vector2(0,0);
             this.position = new objects.Vector2(30, 0);
-            this.regX = this.getBounds().width * 0.5;
-            this.regY = this.getBounds().height;
             this._accelerationX = 0;
         }
 
         public update() : void {
-            if(this._isGrounded)
+            if(this._isGrounded) {
                 this._friction = 0.75;
+                this._velocity.y = 0;
+            }
             else {
                 this._friction = 0;
             }
@@ -43,10 +46,10 @@ module objects {
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
 
-            if(!this._isGrounded)
-                this.position.y += this._velocity.y + this._gravity;
+            
+            this.position.y += this._velocity.y + this._gravity;
 
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
+            //console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             super.update();
         }
 
@@ -74,6 +77,11 @@ module objects {
         }
         public resetAcceleration() : void {
             this._accelerationX = 0;
+        }
+        public jump() : void {
+            this.setIsGrounded(false);
+            this._velocity.y = -15;
+            this._isJumping = true;
         }
     }
 }

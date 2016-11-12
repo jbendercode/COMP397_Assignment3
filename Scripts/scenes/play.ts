@@ -26,36 +26,52 @@ module scenes {
             this._pipes.push(new objects.Pipe(config.PipeSize.SMALL, new objects.Vector2(1208, 450)));
             this._pipes.push(new objects.Pipe(config.PipeSize.MEDIUM, new objects.Vector2(1640, 408)));
             this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(1984,363)));
-            this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(2458, 363)));
+            this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(2460, 363)));
 
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
             for(let pipe of this._pipes) {
-                //this._scrollableObjContainer.addChild(pipe);
+                this._scrollableObjContainer.addChild(pipe);
             }
 
-            this._ground.y = 538;
+            this._ground.y = 535;
 
             this.addChild(this._scrollableObjContainer);
 
             window.onkeydown = this._onKeyDown;
             window.onkeyup = this._onKeyUp;
 
+            createjs.Sound.play("theme");
+
             stage.addChild(this);
         }
 
         public update() : void {
 
-            this._player.update();
-
-            if(this.checkScroll()) {
-                this._scrollBGForward(this._player.getVelocity().x);
-            }
-
             if(!this._player.getIsGrounded())
                 this._checkPlayerWithFloor();
 
+            for(let p of this._pipes ) {
+                if(this.checkCollision(this._player, p)) {
+                    this._player.position.x = p.x - this._player.getBounds().width - 0.01;
+                    this._player.setVelocity(new objects.Vector2(0,0));
+                    this._player.resetAcceleration();
+
+                    this._player.isColliding = true;
+                    
+                    console.log(p.name);
+                }
+                else {
+                    this._player.isColliding = false;
+                }
+            }
+
+            this._player.update();
+
+            if(this.checkScroll()) {
+                this._scrollBGForward(this._player.position.x);
+            }
 
             if(controls.LEFT) {
                 this._player.moveLeft();
@@ -63,6 +79,9 @@ module scenes {
             if(controls.RIGHT) { 
                 this._player.moveRight();
             } 
+            if(controls.JUMP) {
+                this._player.jump();
+            }
 
             if(!controls.RIGHT && !controls.LEFT)
             {
@@ -89,7 +108,7 @@ module scenes {
                     controls.RIGHT = true;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = true;
+                    controls.JUMP = true;
                     break;
             }
         }
@@ -109,20 +128,20 @@ module scenes {
                     controls.RIGHT = false;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = false;
+                    controls.JUMP = false;
                     break;
             }
         }
 
         private _scrollBGForward(speed : number) : void{
             if(this._scrollableObjContainer.regX < 3071 - 815)
-                this._scrollableObjContainer.regX += speed;
+                this._scrollableObjContainer.regX = speed - 300;
         }
 
         private _checkPlayerWithFloor() : void {
-            if(this._player.y > this._ground.y) {
+            if(this._player.y+ this._player.getBounds().height > this._ground.y) {
                 console.log("HIT GROUND");
-                this._player.y = this._ground.y;
+                this._player.position.y = this._ground.y - this._player.getBounds().height - 20;
                 this._player.setIsGrounded(true);
             }
         }
@@ -134,6 +153,18 @@ module scenes {
             else {
                 return false;
             }
+        }
+
+        private checkCollision(obj1 : objects.GameObject, obj2 : objects.GameObject) : boolean {
+
+            if(obj2.x < obj1.x + obj1.getBounds().width &&
+                obj2.x + obj2.getBounds().width > obj1.x &&
+                obj2.y < obj1.y + obj1.getBounds().height &&
+                obj2.y + obj2.getBounds().height > obj1.y - 10) {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -44,7 +44,7 @@ module objects {
             this._initialize(imageString);
             this.start();
         }
-
+        
         private _initialize(imageString:string):void {
             this.name = imageString;
             this.width = this.getBounds().width;

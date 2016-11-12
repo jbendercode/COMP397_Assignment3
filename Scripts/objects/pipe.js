@@ -15,8 +15,8 @@ var objects;
         __extends(Pipe, _super);
         function Pipe(pipeSize, defaultPosition) {
             _super.call(this, atlas, pipeSize);
-            this.position.x = defaultPosition.x;
-            this.position.y = defaultPosition.y;
+            this.x = defaultPosition.x;
+            this.y = defaultPosition.y;
         }
         return Pipe;
     }(objects.GameObject));

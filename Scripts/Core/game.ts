@@ -15,13 +15,14 @@ var scene: number;
 var assetData:objects.Asset[] = [
     {id: "bg", src: "../../Assets/images/allScene.png"},
     {id: "floor", src: "../../Assets/images/floor.png"},
-    {id: "atlas", src: "../../Assets/images/Test.png"}
+    {id: "atlas", src: "../../Assets/images/Test.png"},
+    {id: "theme", src: "../../Assets/audio/main_theme.mp3"}
 ];
 
 function preload() {
     // Create a queue for assets being loaded
     assets = new createjs.LoadQueue(false);
-    // assets.installPlugin(createjs.Sound);
+    assets.installPlugin(createjs.Sound);
     // Register callback function to be run when assets complete loading.
     assets.on("complete", init, this);
     assets.loadManifest(assetData);

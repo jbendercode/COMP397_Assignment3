@@ -17,18 +17,20 @@ var objects;
             this._isStar = false;
             this._isDead = false;
             this._isGrounded = false;
+            this._isJumping = false;
+            this.isColliding = false;
             this.start();
         }
         Player.prototype.start = function () {
             this._velocity = new objects.Vector2(0, 0);
             this.position = new objects.Vector2(30, 0);
-            this.regX = this.getBounds().width * 0.5;
-            this.regY = this.getBounds().height;
             this._accelerationX = 0;
         };
         Player.prototype.update = function () {
-            if (this._isGrounded)
+            if (this._isGrounded) {
                 this._friction = 0.75;
+                this._velocity.y = 0;
+            }
             else {
                 this._friction = 0;
             }
@@ -40,9 +42,8 @@ var objects;
             }
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
-            if (!this._isGrounded)
-                this.position.y += this._velocity.y + this._gravity;
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
+            this.position.y += this._velocity.y + this._gravity;
+            //console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             _super.prototype.update.call(this);
         };
         Player.prototype.getVelocity = function () {
@@ -65,6 +66,11 @@ var objects;
         };
         Player.prototype.resetAcceleration = function () {
             this._accelerationX = 0;
+        };
+        Player.prototype.jump = function () {
+            this.setIsGrounded(false);
+            this._velocity.y = -15;
+            this._isJumping = true;
         };
         return Player;
     }(objects.GameObject));
