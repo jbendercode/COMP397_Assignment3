@@ -17,7 +17,7 @@ module objects {
         public isColliding : boolean = false;
 
         constructor(imgString : string) {
-            super(atlas, imgString);
+            super(imgString);
             this.start();
         }
 

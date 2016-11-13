@@ -3,7 +3,7 @@ module objects {
         private _width:number;
         private _height:number;
         private _name:string;
-        private _position:Vector2;
+        private _position:objects.Vector2;
 
         // PUBLIC PROPERTIES
         get width() : number {
@@ -30,15 +30,15 @@ module objects {
             this._name = s;
         }
 
-        get position() : Vector2 {
+        get position() : objects.Vector2 {
             return this._position
         }
 
-        set position(p:Vector2) {
+        set position(p:objects.Vector2) {
             this._position = p;
         }
 
-        constructor(atlas: createjs.SpriteSheet, imageString : string) {
+        constructor(imageString : string) {
             super(atlas, imageString);
 
             this._initialize(imageString);

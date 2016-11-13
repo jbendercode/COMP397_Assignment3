@@ -7,6 +7,7 @@ module scenes {
         private _player : objects.Player;
 
         private _pipes : objects.Pipe[];
+        private _blocks : objects.Block[];
         private _scrollableObjContainer : createjs.Container;
 
         private _scrollTrigger : number = 350;

@@ -8,7 +8,9 @@ var objects;
     var Ground = (function (_super) {
         __extends(Ground, _super);
         function Ground() {
-            _super.call(this, atlas, "ground");
+            _super.call(this, "ground");
+            this.defaultPosition = new objects.Vector2(0, 538);
+            this.position = this.defaultPosition;
         }
         return Ground;
     }(objects.GameObject));

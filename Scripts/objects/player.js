@@ -8,7 +8,7 @@ var objects;
     var Player = (function (_super) {
         __extends(Player, _super);
         function Player(imgString) {
-            _super.call(this, atlas, imgString);
+            _super.call(this, imgString);
             this._gravity = 9.81;
             this._maxSpeedX = 10;
             this._jumpSpeed = 10;

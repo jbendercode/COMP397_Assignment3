@@ -14,7 +14,7 @@ var objects;
     var Pipe = (function (_super) {
         __extends(Pipe, _super);
         function Pipe(pipeSize, defaultPosition) {
-            _super.call(this, atlas, pipeSize);
+            _super.call(this, pipeSize);
             this.x = defaultPosition.x;
             this.y = defaultPosition.y;
         }

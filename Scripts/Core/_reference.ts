@@ -14,6 +14,7 @@
 /// <reference path="../objects/vector2.ts" />
 /// <reference path="../objects/pipe.ts" />
 
+/// <reference path="../util/physicsManager.ts" />
 
 /// <reference path="../scenes/menu.ts" />
 /// <reference path="../scenes/play.ts" />

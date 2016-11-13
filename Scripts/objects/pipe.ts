@@ -5,7 +5,7 @@ module objects {
         private _pipeSize : string;
 
         constructor(pipeSize : string, defaultPosition : objects.Vector2) {
-            super(atlas, pipeSize);
+            super(pipeSize);
             this.x = defaultPosition.x;
             this.y = defaultPosition.y;
         }
