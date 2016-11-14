@@ -28,6 +28,15 @@ module objects {
         }
 
         public update() : void {
+            // Acceleration \
+            // Velocity
+            this._velocity.x += this._accelerationX;
+            this._velocity.y += this._gravity;
+            // Position
+            this.position.x += this._velocity.x;
+            this.position.y += this._velocity.y;
+
+
             if(this._isGrounded) {
                 this._friction = 0.75;
                 this._velocity.y = 0;
@@ -37,6 +46,7 @@ module objects {
             }
             
             // AccelerationX affects Velocity.x
+
             // Gravity affects Velocity.y
             // MaxSpeed caps Velocity.x
             if(Math.abs(this._velocity.x) < this._maxSpeedX) {

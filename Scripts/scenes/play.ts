@@ -8,6 +8,7 @@ module scenes {
 
         private _pipes : objects.Pipe[];
         private _blocks : objects.Block[];
+        private _qBlocks : objects.qBlock[];
         private _scrollableObjContainer : createjs.Container;
 
         private _scrollTrigger : number = 350;
@@ -29,11 +30,30 @@ module scenes {
             this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(1984,363)));
             this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(2460, 363)));
 
+            this._blocks = [];
+            this._blocks.push(new objects.Block(new objects.Vector2(861,364)));
+            this._blocks.push(new objects.Block(new objects.Vector2(946,364)));
+            this._blocks.push(new objects.Block(new objects.Vector2(1031,364)));
+
+            this._qBlocks = [];
+            this._qBlocks.push(new objects.qBlock(new objects.Vector2(688, 364)));
+            this._qBlocks.push(new objects.qBlock(new objects.Vector2(906, 364)));
+            this._qBlocks.push(new objects.qBlock(new objects.Vector2(993, 364)));
+            this._qBlocks.push(new objects.qBlock(new objects.Vector2(948, 191)));
+
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
             for(let pipe of this._pipes) {
                 this._scrollableObjContainer.addChild(pipe);
+            }
+
+            for(let block of this._blocks) {
+                this._scrollableObjContainer.addChild(block);
+            }
+
+            for(let qBlock of this._qBlocks) {
+                this._scrollableObjContainer.addChild(qBlock);
             }
 
             this._ground.y = 535;
@@ -49,6 +69,21 @@ module scenes {
         }
 
         public update() : void {
+
+            if(controls.LEFT) {
+                this._player.moveLeft();
+            }
+            if(controls.RIGHT) { 
+                this._player.moveRight();
+            } 
+            if(controls.JUMP) {
+                this._player.jump();
+            }
+
+            if(!controls.RIGHT && !controls.LEFT)
+            {
+                this._player.resetAcceleration();
+            }
 
             if(!this._player.getIsGrounded())
                 this._checkPlayerWithFloor();
@@ -74,20 +109,7 @@ module scenes {
                 this._scrollBGForward(this._player.position.x);
             }
 
-            if(controls.LEFT) {
-                this._player.moveLeft();
-            }
-            if(controls.RIGHT) { 
-                this._player.moveRight();
-            } 
-            if(controls.JUMP) {
-                this._player.jump();
-            }
 
-            if(!controls.RIGHT && !controls.LEFT)
-            {
-                this._player.resetAcceleration();
-            }
         }
 
         private _onKeyDown(event: KeyboardEvent) : void {
