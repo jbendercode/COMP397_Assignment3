@@ -13,6 +13,7 @@ module objects {
         private _isDead : boolean = false;
         private _isGrounded : boolean = false;
         private _isJumping : boolean = false;
+        private _isRunning : boolean = false;
         
         public isColliding : boolean = false;
 
@@ -59,8 +60,6 @@ module objects {
             if(this._velocity.y > 9.81) {
                 this._velocity.y = 9.81;
             }
-
-            
             /*
             if(this._isGrounded) {
                 this._friction = 0.75;
@@ -114,6 +113,7 @@ module objects {
         public resetAcceleration() : void {
             this._accelerationX = 0;
             this._velocity.x = 0;
+            this.gotoAndStop("player");
         }
         public jump() : void {
             this.setIsGrounded(false);

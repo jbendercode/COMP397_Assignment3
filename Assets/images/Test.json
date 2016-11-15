@@ -2,7 +2,7 @@
 
 {
 	"filename": "block.png",
-	"frame": {"x":83,"y":0,"w":45,"h":45},
+	"frame": {"x":40,"y":0,"w":45,"h":45},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":45},
@@ -10,8 +10,35 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
+	"filename": "mario2.png",
+	"frame": {"x":43,"y":45,"w":46,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":86},
+	"sourceSize": {"w":46,"h":86},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "mario3.png",
+	"frame": {"x":43,"y":131,"w":39,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":86},
+	"sourceSize": {"w":39,"h":86},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "mario4.png",
+	"frame": {"x":0,"y":131,"w":43,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":43,"h":86},
+	"sourceSize": {"w":43,"h":86},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
 	"filename": "pipe1.png",
-	"frame": {"x":0,"y":216,"w":87,"h":87},
+	"frame": {"x":0,"y":217,"w":87,"h":87},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":87},
@@ -20,7 +47,7 @@
 },
 {
 	"filename": "pipe2.png",
-	"frame": {"x":0,"y":86,"w":87,"h":130},
+	"frame": {"x":0,"y":304,"w":87,"h":130},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":130},
@@ -29,7 +56,7 @@
 },
 {
 	"filename": "pipe3.png",
-	"frame": {"x":0,"y":303,"w":93,"h":175},
+	"frame": {"x":0,"y":434,"w":93,"h":175},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":93,"h":175},
@@ -38,7 +65,7 @@
 },
 {
 	"filename": "player.png",
-	"frame": {"x":40,"y":0,"w":43,"h":86},
+	"frame": {"x":0,"y":45,"w":43,"h":86},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":43,"h":86},
@@ -59,8 +86,8 @@
 	"version": "1.0",
 	"image": "Test.png",
 	"format": "RGBA8888",
-	"size": {"w":128,"h":478},
+	"size": {"w":93,"h":609},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:0f24bae2f33e39ef9e85d26941343ab8:a0fe6c4cbe752e2c6be0f20652cb8ea4:d8a437306bd23494f81c694ac29ca037$"
+	"smartupdate": "$TexturePacker:SmartUpdate:438746a8690c4aeb42086b1aa1cfc729:e1aa483b2c4230d4fe33239c00eec1e4:d8a437306bd23494f81c694ac29ca037$"
 }
 }

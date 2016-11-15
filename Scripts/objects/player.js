@@ -18,6 +18,7 @@ var objects;
             this._isDead = false;
             this._isGrounded = false;
             this._isJumping = false;
+            this._isRunning = false;
             this.isColliding = false;
             this.start();
         }
@@ -101,6 +102,7 @@ var objects;
         Player.prototype.resetAcceleration = function () {
             this._accelerationX = 0;
             this._velocity.x = 0;
+            this.gotoAndStop("player");
         };
         Player.prototype.jump = function () {
             this.setIsGrounded(false);
