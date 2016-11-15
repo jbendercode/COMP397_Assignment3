@@ -27,23 +27,57 @@ var objects;
             this._accelerationX = 0;
         };
         Player.prototype.update = function () {
+            // Acceleration \
+            // Velocity
+            if (this._velocity.x > this._maxSpeedX) {
+                this._velocity.x = this._maxSpeedX;
+            }
+            else if (this._velocity.x < -this._maxSpeedX) {
+                this._velocity.x = -this._maxSpeedX;
+            }
+            else {
+                this._velocity.x += this._accelerationX;
+            }
+            if (this._velocity.y > 9.81) {
+                this._velocity.y = 5;
+            }
             if (this._isGrounded) {
+                this._velocity.y = 0;
+            }
+            else {
+                this._velocity.y += this._gravity;
+            }
+            // Position
+            this.position.x += this._velocity.x;
+            this.position.y += this._velocity.y;
+            if (this._velocity.y > 9.81) {
+                this._velocity.y = 9.81;
+            }
+            /*
+            if(this._isGrounded) {
                 this._friction = 0.75;
                 this._velocity.y = 0;
             }
             else {
                 this._friction = 0;
             }
+            
             // AccelerationX affects Velocity.x
+
             // Gravity affects Velocity.y
             // MaxSpeed caps Velocity.x
-            if (Math.abs(this._velocity.x) < this._maxSpeedX) {
+            if(Math.abs(this._velocity.x) < this._maxSpeedX) {
                 this._velocity.x += this._accelerationX;
             }
+
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
+
             this.position.y += this._velocity.y + this._gravity;
-            //console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
+
+            //
+            */
+            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             _super.prototype.update.call(this);
         };
         Player.prototype.getVelocity = function () {
@@ -66,10 +100,11 @@ var objects;
         };
         Player.prototype.resetAcceleration = function () {
             this._accelerationX = 0;
+            this._velocity.x = 0;
         };
         Player.prototype.jump = function () {
             this.setIsGrounded(false);
-            this._velocity.y = -15;
+            this._velocity.y = -25;
             this._isJumping = true;
         };
         return Player;

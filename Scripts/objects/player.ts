@@ -30,13 +30,38 @@ module objects {
         public update() : void {
             // Acceleration \
             // Velocity
-            this._velocity.x += this._accelerationX;
-            this._velocity.y += this._gravity;
+            if(this._velocity.x > this._maxSpeedX) {
+                this._velocity.x = this._maxSpeedX;
+            } else if (this._velocity.x < -this._maxSpeedX) {
+                this._velocity.x = -this._maxSpeedX;
+            } 
+            else {
+                this._velocity.x += this._accelerationX;
+            }
+
+            if(this._velocity.y > 9.81) {
+                this._velocity.y = 5;
+            }
+
+
+            if(this._isGrounded) {
+                this._velocity.y = 0;
+            } else {
+                this._velocity.y += this._gravity;
+            }
+
+
+            
             // Position
             this.position.x += this._velocity.x;
             this.position.y += this._velocity.y;
 
+            if(this._velocity.y > 9.81) {
+                this._velocity.y = 9.81;
+            }
 
+            
+            /*
             if(this._isGrounded) {
                 this._friction = 0.75;
                 this._velocity.y = 0;
@@ -56,10 +81,11 @@ module objects {
             this._velocity.x *= this._friction;
             this.position.x += this._velocity.x;
 
-            
             this.position.y += this._velocity.y + this._gravity;
 
-            //console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
+            //
+            */
+            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             super.update();
         }
 
@@ -87,10 +113,11 @@ module objects {
         }
         public resetAcceleration() : void {
             this._accelerationX = 0;
+            this._velocity.x = 0;
         }
         public jump() : void {
             this.setIsGrounded(false);
-            this._velocity.y = -15;
+            this._velocity.y = -25;
             this._isJumping = true;
         }
     }

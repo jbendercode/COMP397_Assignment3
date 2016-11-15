@@ -164,7 +164,7 @@ module scenes {
         private _checkPlayerWithFloor() : void {
             if(this._player.y+ this._player.getBounds().height > this._ground.y) {
                 console.log("HIT GROUND");
-                this._player.position.y = this._ground.y - this._player.getBounds().height - 20;
+                this._player.position.y = this._ground.y - this._player.getBounds().height;
                 this._player.setIsGrounded(true);
             }
         }
