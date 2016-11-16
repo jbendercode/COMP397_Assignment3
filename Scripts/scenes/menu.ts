@@ -9,7 +9,6 @@ module scenes {
         // Private instance variables
         // Label or bitmap
         // Button 
-        private _playBtn : objects.Button;
         // Menu Class Contructor
         constructor() {
             super();

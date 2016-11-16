@@ -9,12 +9,10 @@ var objects;
         __extends(Player, _super);
         function Player(imgString) {
             _super.call(this, imgString);
-            this._gravity = 9.81;
+            this._gravity = 6.0;
             this._maxSpeedX = 10;
             this._jumpSpeed = 10;
-            this._friction = -1;
-            this._marioState = config.MarioState.SMALL;
-            this._isStar = false;
+            this._friction = -0.5;
             this._isDead = false;
             this._isGrounded = false;
             this._isJumping = false;
@@ -24,11 +22,26 @@ var objects;
         }
         Player.prototype.start = function () {
             this._velocity = new objects.Vector2(0, 0);
-            this.position = new objects.Vector2(30, 0);
+            this.position = new objects.Vector2(300, 2660);
             this._accelerationX = 0;
+            this.setIsGrounded(false);
         };
         Player.prototype.update = function () {
-            // Acceleration \
+            // Player Controls
+            if (controls.JUMP && this._isGrounded) {
+                this.jump();
+            }
+            else if (controls.LEFT) {
+                this.gotoAndStop("left");
+                this.moveLeft();
+            }
+            else if (controls.RIGHT) {
+                this.gotoAndStop("right");
+                this.moveRight();
+            }
+            else {
+                this.gotoAndStop("idle");
+            }
             // Velocity
             if (this._velocity.x > this._maxSpeedX) {
                 this._velocity.x = this._maxSpeedX;
@@ -39,46 +52,24 @@ var objects;
             else {
                 this._velocity.x += this._accelerationX;
             }
-            if (this._velocity.y > 9.81) {
-                this._velocity.y = 5;
+            if (Math.abs(this._velocity.x) < this._maxSpeedX) {
+                this._velocity.x += this._accelerationX;
+            }
+            this._velocity.x *= this._friction;
+            if (Math.abs(this._velocity.x) > 0.05) {
+                this.position.x -= this._velocity.x;
+            }
+            if (this._velocity.y > this._gravity) {
+                this._velocity.y = this._gravity;
             }
             if (this._isGrounded) {
                 this._velocity.y = 0;
             }
             else {
                 this._velocity.y += this._gravity;
+                this.position.y += this._velocity.y;
+                this.gotoAndStop("jump");
             }
-            // Position
-            this.position.x += this._velocity.x;
-            this.position.y += this._velocity.y;
-            if (this._velocity.y > 9.81) {
-                this._velocity.y = 9.81;
-            }
-            /*
-            if(this._isGrounded) {
-                this._friction = 0.75;
-                this._velocity.y = 0;
-            }
-            else {
-                this._friction = 0;
-            }
-            
-            // AccelerationX affects Velocity.x
-
-            // Gravity affects Velocity.y
-            // MaxSpeed caps Velocity.x
-            if(Math.abs(this._velocity.x) < this._maxSpeedX) {
-                this._velocity.x += this._accelerationX;
-            }
-
-            this._velocity.x *= this._friction;
-            this.position.x += this._velocity.x;
-
-            this.position.y += this._velocity.y + this._gravity;
-
-            //
-            */
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             _super.prototype.update.call(this);
         };
         Player.prototype.getVelocity = function () {
@@ -94,19 +85,19 @@ var objects;
             this._isGrounded = b;
         };
         Player.prototype.moveRight = function () {
-            this._accelerationX += 0.05;
+            this._accelerationX += 0.15;
         };
         Player.prototype.moveLeft = function () {
-            this._accelerationX += -0.05;
+            this._accelerationX += -0.15;
         };
         Player.prototype.resetAcceleration = function () {
             this._accelerationX = 0;
             this._velocity.x = 0;
-            this.gotoAndStop("player");
+            this.gotoAndStop("idle");
         };
         Player.prototype.jump = function () {
             this.setIsGrounded(false);
-            this._velocity.y = -25;
+            this._velocity.y = -65;
             this._isJumping = true;
         };
         return Player;

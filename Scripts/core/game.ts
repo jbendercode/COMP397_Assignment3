@@ -1,7 +1,7 @@
 /// <reference path = "_reference.ts" />
 
 // Global Variables
-var assets: createjs.LoadQueue;
+var assets;
 var canvas: HTMLElement;
 var stage: createjs.Stage;
 
@@ -13,10 +13,12 @@ var scene: number;
 
 // Preload Assets required
 var assetData:objects.Asset[] = [
-    {id: "bg", src: "../../Assets/images/allScene.png"},
-    {id: "floor", src: "../../Assets/images/floor.png"},
-    {id: "atlas", src: "../../Assets/images/Test.png"},
-    {id: "theme", src: "../../Assets/audio/main_theme.mp3"}
+    {id: "bg", src: "../../Assets/images/background-iceman.png"},
+    {id: "iceman-idle", src: "../../Assets/images/iceman-idle.png"},
+    {id: "iceman-jumping", src: "../../Assets/images/iceman-jumping.png"},
+    {id: "iceman-moving", src: "../../Assets/images/iceman-moving.png"},
+    {id: "cube", src: "../../Assets/images/stonecube.png"},
+    {id: "iceman-spritesheet", src: "../../Assets/images/iceman-ss.png"}
 ];
 
 function preload() {
@@ -35,39 +37,27 @@ function init() {
     stage.enableMouseOver(20);
     createjs.Ticker.setFPS(config.Game.FPS);
     createjs.Ticker.on("tick", this.gameLoop, this);
-
+    
+    // Initialize Cubeman sprites
     let atlasData = {
-        "images": [
-            /*
-            assets.getResult("player"),
-            assets.getResult("block"),
-            assets.getResult("pipe1.png"),
-            assets.getResult("pipe2.png"),
-            assets.getResult("pipe3.png"),
-            assets.getResult("qBlock")
-            */
-            assets.getResult("atlas")
+        images: [
+            assets.getResult("iceman-spritesheet")
         ],
-        "frames":[
-            [40,0,45,45,0,0,0],
-            [43,45,46,86,0,0,0],
-            [43.131,39,86,0,0,0],
-            [0,131,43,86,0,0,0],
-            [0,217,87,87,0,0,0],
-            [0,304,87,130,0,0,0],
-            [0,434,93,175,0,0,0],
-            [0,45,43,86,0,0,0],
-            [0,0,40,45,0,0,0]
-        ],
-        "animations":{
-            "run" : { "frames" : [1, 3] , speed : 0.5},
-            "player" : { "frames" : [7] },
-            "block" : { "frames" : [0] },
-            "qBlock" : { "frames" : [8]}, 
-            "pipe1" : { "frames" : [4] },
-            "pipe2" : { "frames" : [5] },
-            "pipe3" : { "frames" : [6] }
-        }, 
+        
+        frames: {width: 75, height: 75, count: 4, regX: 37.5, regY: 37.5, spacing: 0, margin: 0},
+        
+        animations: {
+            idle: 0,
+            jump: 1,
+            left: 3,
+            right: 2
+        },
+        
+        texturepacker: [
+                "SmartUpdateHash: $TexturePacker:SmartUpdate:6b44ef51929ea21e17ff1b07ec9c1090:a443013636a6d3e24441fc0f2a91ca43:a99356c10d69482e9bee53d25c3d05e1$",
+                "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+        ]
+    
     }
 
     atlas = new createjs.SpriteSheet(atlasData);

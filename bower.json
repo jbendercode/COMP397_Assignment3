@@ -1,7 +1,7 @@
 {
-  "name": "COMP397_BoilerPlate",
+  "name": "COMP397_Assignment3",
   "authors": [
-    "wbalaniucCentennialCollege <wbalaniu@my.centennialcollege.ca>"
+    "JoshBender <jbendercode@gmail.com>"
   ],
   "description": "",
   "main": "",
@@ -13,6 +13,7 @@
     "bower_components",
     "Scripts/lib",
     "test",
-    "tests"
+    "tests",
+    ".c9"
   ]
 }

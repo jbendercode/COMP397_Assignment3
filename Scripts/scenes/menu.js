@@ -11,6 +11,9 @@ var scenes;
 (function (scenes) {
     var Menu = (function (_super) {
         __extends(Menu, _super);
+        // Private instance variables
+        // Label or bitmap
+        // Button 
         // Menu Class Contructor
         function Menu() {
             _super.call(this);

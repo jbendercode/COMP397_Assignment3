@@ -1,15 +1,13 @@
 module objects {
     export class Player extends objects.GameObject {
-        private _gravity : number = 9.81;
+        private _gravity : number = 6.0;
 
         private _maxSpeedX : number = 10;
         private _velocity : objects.Vector2;
         private _accelerationX : number;
         private _jumpSpeed : number = 10;
-        private _friction : number = -1;
+        private _friction : number = -0.5;
 
-        private _marioState : number = config.MarioState.SMALL;
-        private _isStar : boolean = false;
         private _isDead : boolean = false;
         private _isGrounded : boolean = false;
         private _isJumping : boolean = false;
@@ -24,12 +22,25 @@ module objects {
 
         public start() : void {
             this._velocity = new objects.Vector2(0,0);
-            this.position = new objects.Vector2(30, 0);
+            this.position = new objects.Vector2(300, 2660);
             this._accelerationX = 0;
+            this.setIsGrounded(false);
         }
 
         public update() : void {
-            // Acceleration \
+            // Player Controls
+            if (controls.JUMP && this._isGrounded){
+                this.jump();
+            } else if (controls.LEFT){
+                this.gotoAndStop("left");
+                this.moveLeft();
+            } else if (controls.RIGHT){
+                this.gotoAndStop("right");
+                this.moveRight();
+            } else {
+                this.gotoAndStop("idle");
+            }
+            
             // Velocity
             if(this._velocity.x > this._maxSpeedX) {
                 this._velocity.x = this._maxSpeedX;
@@ -39,52 +50,27 @@ module objects {
             else {
                 this._velocity.x += this._accelerationX;
             }
-
-            if(this._velocity.y > 9.81) {
-                this._velocity.y = 5;
+            
+            if(Math.abs(this._velocity.x) < this._maxSpeedX) {
+                this._velocity.x += this._accelerationX;
+            }
+            this._velocity.x *= this._friction;
+            if (Math.abs(this._velocity.x ) > 0.05){
+                this.position.x -= this._velocity.x;
             }
 
-
+            if(this._velocity.y > this._gravity) {
+                this._velocity.y = this._gravity;
+            }
+            
             if(this._isGrounded) {
                 this._velocity.y = 0;
             } else {
                 this._velocity.y += this._gravity;
-            }
-
-
-            
-            // Position
-            this.position.x += this._velocity.x;
-            this.position.y += this._velocity.y;
-
-            if(this._velocity.y > 9.81) {
-                this._velocity.y = 9.81;
-            }
-            /*
-            if(this._isGrounded) {
-                this._friction = 0.75;
-                this._velocity.y = 0;
-            }
-            else {
-                this._friction = 0;
+                this.position.y += this._velocity.y;
+                this.gotoAndStop("jump");
             }
             
-            // AccelerationX affects Velocity.x
-
-            // Gravity affects Velocity.y
-            // MaxSpeed caps Velocity.x
-            if(Math.abs(this._velocity.x) < this._maxSpeedX) {
-                this._velocity.x += this._accelerationX;
-            }
-
-            this._velocity.x *= this._friction;
-            this.position.x += this._velocity.x;
-
-            this.position.y += this._velocity.y + this._gravity;
-
-            //
-            */
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             super.update();
         }
 
@@ -105,19 +91,19 @@ module objects {
         }
 
         public moveRight() : void {
-            this._accelerationX += 0.05;
+            this._accelerationX += 0.15;
         }
         public moveLeft() : void {
-            this._accelerationX += -0.05;
+            this._accelerationX += -0.15;
         }
         public resetAcceleration() : void {
             this._accelerationX = 0;
             this._velocity.x = 0;
-            this.gotoAndStop("player");
+            this.gotoAndStop("idle");
         }
         public jump() : void {
             this.setIsGrounded(false);
-            this._velocity.y = -25;
+            this._velocity.y = -65; 
             this._isJumping = true;
         }
     }

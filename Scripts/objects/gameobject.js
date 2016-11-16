@@ -60,6 +60,7 @@ var objects;
             //this.regX = this.width * 0.5;
             //this.regY = this.height * 0.5;
             this.position = new objects.Vector2(this.x, this.y);
+            this.gotoAndPlay(imageString);
         };
         GameObject.prototype.start = function () { };
         GameObject.prototype.update = function () {
