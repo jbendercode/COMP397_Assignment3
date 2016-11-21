@@ -40,7 +40,6 @@ module objects {
 
         constructor(imageString : string) {
             super(atlas, imageString);
-
             this._initialize(imageString);
             this.start();
         }

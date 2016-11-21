@@ -11,22 +11,39 @@ var scenes;
 (function (scenes) {
     var Menu = (function (_super) {
         __extends(Menu, _super);
-        // Private instance variables
-        // Label or bitmap
-        // Button 
         // Menu Class Contructor
         function Menu() {
             _super.call(this);
         }
         Menu.prototype.start = function () {
+            // Add bg
+            this._bg = new createjs.Bitmap(assets.getResult("menu-bg"));
+            this.addChild(this._bg);
+            // Add play button
+            this._playBtn = new objects.Button("play", config.Screen.CENTER_X + 50, config.Screen.CENTER_Y + 200);
+            this._playBtn.scaleX = 0.5;
+            this._playBtn.scaleY = 0.5;
+            this._playBtn.cursor = "pointer";
+            this.addChild(this._playBtn);
+            this._playBtn.on("click", this._playBtnClick, this);
+            // Add instructions button
+            this._howToPlayBtn = new objects.Button("how-to-play", config.Screen.CENTER_X - 250, config.Screen.CENTER_Y + 200);
+            this._howToPlayBtn.scaleX = 0.5;
+            this._howToPlayBtn.scaleY = 0.5;
+            this._howToPlayBtn.cursor = "pointer";
+            this.addChild(this._howToPlayBtn);
+            this._howToPlayBtn.on("click", this._howToPlayBtnClick, this);
             // Add menu scene to global stage container
             stage.addChild(this);
         };
         Menu.prototype.update = function () {
         };
         Menu.prototype._playBtnClick = function (event) {
-            console.log("PRINT");
             scene = config.Scene.GAME;
+            changeScene();
+        };
+        Menu.prototype._howToPlayBtnClick = function (event) {
+            scene = config.Scene.INST;
             changeScene();
         };
         return Menu;

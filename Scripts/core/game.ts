@@ -1,9 +1,13 @@
 /// <reference path = "_reference.ts" />
 
+// Last updated Nov 20th, 2016
+// Edited by: Josh Bender
+
 // Global Variables
 var assets;
 var canvas: HTMLElement;
 var stage: createjs.Stage;
+var lastScore: number;
 
 var spriteSheetLoader : createjs.SpriteSheetLoader;
 var atlas : createjs.SpriteSheet;
@@ -17,8 +21,12 @@ var assetData:objects.Asset[] = [
     {id: "iceman-idle", src: "../../Assets/images/iceman-idle.png"},
     {id: "iceman-jumping", src: "../../Assets/images/iceman-jumping.png"},
     {id: "iceman-moving", src: "../../Assets/images/iceman-moving.png"},
-    {id: "cube", src: "../../Assets/images/stonecube.png"},
-    {id: "iceman-spritesheet", src: "../../Assets/images/iceman-ss.png"}
+    {id: "iceman-spritesheet", src: "../../Assets/images/iceman-ss.png"},
+    {id: "menu-bg", src: "../../Assets/images/menu-bg-iceman.png"},
+    {id: "play", src: "../../Assets/images/play.png"},
+    {id: "how-to-play", src: "../../Assets/images/how-to-play.png"},
+    {id: "inst-bg", src: "../../Assets/images/instructions-iceman.png"},
+    {id: "back", src: "../../Assets/images/back.png"}
 ];
 
 function preload() {
@@ -44,13 +52,14 @@ function init() {
             assets.getResult("iceman-spritesheet")
         ],
         
-        frames: {width: 75, height: 75, count: 4, regX: 37.5, regY: 37.5, spacing: 0, margin: 0},
+        frames: {width: 75, height: 75, count: 5, regX: 37.5, regY: 37.5, spacing: 0, margin: 0},
         
         animations: {
             idle: 0,
             jump: 1,
             left: 3,
-            right: 2
+            right: 2,
+            cube: 4
         },
         
         texturepacker: [
@@ -62,7 +71,7 @@ function init() {
 
     atlas = new createjs.SpriteSheet(atlasData);
 
-    scene = config.Scene.GAME;
+    scene = config.Scene.MENU;
     changeScene();
 }
 
@@ -86,6 +95,21 @@ function changeScene() : void {
             stage.removeAllChildren();
             currentScene = new scenes.Play();
             console.log("Starting PLAY scene");
+            break;
+        case config.Scene.INST :
+            stage.removeAllChildren();
+            currentScene = new scenes.Instructions();
+            console.log("Starting INST scene");
+            break;
+        case config.Scene.GAMEOVER :
+            stage.removeAllChildren();
+            currentScene = new scenes.GameOver();
+            console.log("Starting GAMEOVER scene");
+            break;
+        case config.Scene.WINNER :
+            stage.removeAllChildren();
+            currentScene = new scenes.Winner();
+            console.log("Starting WIN scene");
             break;
     }
     

@@ -1,12 +1,11 @@
 module objects {
     export class Player extends objects.GameObject {
-        private _gravity : number = 6.0;
+        private _gravity : number = 4.0;
 
-        private _maxSpeedX : number = 10;
         private _velocity : objects.Vector2;
         private _accelerationX : number;
         private _jumpSpeed : number = 10;
-        private _friction : number = -0.5;
+        private _friction : number = -0.8;
 
         private _isDead : boolean = false;
         private _isGrounded : boolean = false;
@@ -22,7 +21,7 @@ module objects {
 
         public start() : void {
             this._velocity = new objects.Vector2(0,0);
-            this.position = new objects.Vector2(300, 2660);
+            this.position = new objects.Vector2(175, 2660);
             this._accelerationX = 0;
             this.setIsGrounded(false);
         }
@@ -40,24 +39,11 @@ module objects {
             } else {
                 this.gotoAndStop("idle");
             }
-            
-            // Velocity
-            if(this._velocity.x > this._maxSpeedX) {
-                this._velocity.x = this._maxSpeedX;
-            } else if (this._velocity.x < -this._maxSpeedX) {
-                this._velocity.x = -this._maxSpeedX;
-            } 
-            else {
-                this._velocity.x += this._accelerationX;
-            }
-            
-            if(Math.abs(this._velocity.x) < this._maxSpeedX) {
-                this._velocity.x += this._accelerationX;
-            }
+
+            // Apply acceleration and friction to velocity
+            this._velocity.x += this._accelerationX;
             this._velocity.x *= this._friction;
-            if (Math.abs(this._velocity.x ) > 0.05){
-                this.position.x -= this._velocity.x;
-            }
+            this.position.x -= this._velocity.x;
 
             if(this._velocity.y > this._gravity) {
                 this._velocity.y = this._gravity;
@@ -91,10 +77,10 @@ module objects {
         }
 
         public moveRight() : void {
-            this._accelerationX += 0.15;
+            this._accelerationX += 0.4;
         }
         public moveLeft() : void {
-            this._accelerationX += -0.15;
+            this._accelerationX += -0.4;
         }
         public resetAcceleration() : void {
             this._accelerationX = 0;
@@ -103,7 +89,7 @@ module objects {
         }
         public jump() : void {
             this.setIsGrounded(false);
-            this._velocity.y = -65; 
+            this._velocity.y += -46;
             this._isJumping = true;
         }
     }

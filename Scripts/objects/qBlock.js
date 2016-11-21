@@ -8,7 +8,7 @@ var objects;
     var qBlock = (function (_super) {
         __extends(qBlock, _super);
         function qBlock(defaultPosition) {
-            _super.call(this, "qBlock");
+            _super.call(this, "cube");
             this.position = defaultPosition;
         }
         return qBlock;

@@ -5,6 +5,9 @@ module config {
     export class Scene {
         public static MENU : number = 0;
         public static GAME : number = 1;
+        public static INST : number = 2;
+        public static GAMEOVER : number = 3;
+        public static WINNER : number = 4;
     }
 
     export class Screen {
